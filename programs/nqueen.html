@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>N-Queen Problem</title>    
+    
+    <script>
+        
+        var i;
+        var p=[];
+        var ct=0;
+        for(i=0;i<100;i++)
+        {
+            p[i]=0;
+        }
+        function queen()
+        {
+            ct=0;
+            var n,z;
+            n=prompt("Enter the value of N :");
+            n=parseInt(n);
+            z=rec(n,0);
+            
+            alert("Total Combinations Printed : "+ct);
+        }
+        
+        function color(n)
+        {
+            var i,j;
+            var d=700.0/n;
+            var can = document.getElementById("canvas1");
+            var ctx = can.getContext('2d');
+            for(i=0;i<n;i++)
+            {
+                for(j=0;j<n;j++)
+                {
+                    var ch=parseInt(i+j);
+                    
+                    if(p[i]==j)
+                    {
+                        ctx.fillStyle="Red";
+                        ctx.fillRect((j)*d,(i)*d,d,d);
+                        var c=document.getElementById("canvas1");
+                        var cx=c.getContext("2d");
+                        var img=document.getElementById("q");
+                        cx.drawImage(img,(j)*d,(i)*d,d,d);
+                    }
+                    else if(ch%2==0)
+                    {
+                        ctx.fillStyle="Black";
+                        ctx.fillRect((j)*d,(i)*d,d,d);
+                    }
+                    else
+                    {
+                        ctx.fillStyle="White";
+                        ctx.fillRect((j)*d,(i)*d,d,d);
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        function findcol(num, k)
+        {
+            var i;
+            for(i=0;i<k;i++)
+            {
+                if(num==p[i])
+                    return true;
+            }
+            return false;
+        }
+        function finddia(num,k)
+        {
+            var i,j;
+            for(i=k-1,j=1;i>=0;i--,j++)
+            {
+                if(num==p[i]+j||num==p[i]-j)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+        
+    function rec(n,r)
+    {
+        var z,k,m,i;
+        if(r==n)
+        {
+            return true;
+        }
+        for( i=0;i<n;i++)
+        {
+            if(findcol(i,r)||finddia(i,r))
+            {
+                continue;
+            }
+                
+            p[r]=i;
+            z=rec(n,r+1);
+            p[r+1]=0;
+            
+            if(z)
+            {
+                ct+=1;
+                color(n);
+                alert("Next");
+            }
+        }
+        return false;
+    }   
+    
+    </script>
+    
+</head>
+<body>    
+    <canvas id="canvas1" width="700" height="700" style="border:1px solid #d3d3d3"></canvas>
+    
+    <form name="Form3">
+            <input type="submit" value="Click to run" onmousedown=queen() style="font-size:20px; background-color:#f79e9e; height:50px; width:200px">
+        </form>
+    
+    <img id="q" width="0" height="0" src="Queen.png" alt="queen" visibility="hidden">
+</body>
+
+
+</html>
